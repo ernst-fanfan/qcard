@@ -50,20 +50,22 @@ class Set_of_Cards():
     def get_cards(self):
         return self.cards
         
+    #add card to set
     def add_card(self, card):
         key = card.get_question()
-        value = card.get_answer()
-        self.cards[key] = value 
+        self.cards[key] = card
+        
+    #remove carsd to set
+    def remove_card(self, card):
+        key = card.question
+        self.cards.pop(key)
         
     def merge_sets(self, new_set, name=None, subject=None):
         if not name == None:
             self.set_name(name)
         if not subject == None:
             self.set_subject(subject)
-        self.cards += new_set.get_cards()
-        
-    def __add__(self, cards):
-        return self.cards | new_set.get_cards
+        self.cards = self.cards | new_set.get_cards()
         
     def __repr__(self):
         msg = "{}, {}, {}".format(self.name, self.subject, self.cards)
@@ -86,4 +88,6 @@ print(card2)
 set1 = Set_of_Cards("One table", "Adding")
 set1.add_card(card1)
 set1.add_card(card2)
+print(set1)
+set1.remove_card(card1)
 print(set1)
