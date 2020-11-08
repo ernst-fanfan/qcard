@@ -68,13 +68,15 @@ class Set_of_Cards():
         self.cards = self.cards | new_set.get_cards()
         
     def __repr__(self):
-        msg = "{}, {}, {}".format(self.name, self.subject, self.cards)
-        return msg
+        return "{}, {}, {}".format(self.name, self.subject, self.cards)
     
 class Library():
     def __init__(self, owner):
         self.owner = owner
         self.collection = {}
+
+    def get_owner(self):
+        return self.owner
 
     def add_set(self, new_set):
         key = new_set.get_name()
@@ -83,6 +85,10 @@ class Library():
     def remove_set(self, set_to_remove):
         key = set_to_remove.get_name()
         self.collection.pop(key)
+
+    def __repr__(self):
+        return "{}, {}\n".format(self.owner, self.collection)
+
     
 class Quiz():
     pass
@@ -101,3 +107,7 @@ set1.add_card(card2)
 print(set1)
 set1.remove_card(card1)
 print(set1)
+lib1 = Library("mee")
+lib1.add_set(set1)
+
+print(lib1)
