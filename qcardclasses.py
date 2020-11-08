@@ -72,7 +72,17 @@ class Set_of_Cards():
         return msg
     
 class Library():
-    pass
+    def __init__(self, owner):
+        self.owner = owner
+        self.collection = {}
+
+    def add_set(self, new_set):
+        key = new_set.get_name()
+        self.collection[key] = new_set
+
+    def remove_set(self, set_to_remove):
+        key = set_to_remove.get_name()
+        self.collection.pop(key)
     
 class Quiz():
     pass
