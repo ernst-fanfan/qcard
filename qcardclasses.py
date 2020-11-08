@@ -99,15 +99,29 @@ class test(Quiz):
 #test
 card1 = Card("1+1", "2")
 card2 = Card("1+2", "3")
-print (card1)
-print(card2)
+card3 = Card("1+3", "4")
+card4 = Card("1+4", "5")
+
 set1 = Set_of_Cards("One table", "Adding")
 set1.add_card(card1)
 set1.add_card(card2)
-print(set1)
-set1.remove_card(card1)
-print(set1)
+set1.add_card(card3)
+set1.add_card(card4)
+
+#set1.remove_card(card1)
+card5 = Card("1st President", "George Washignton")
+card6 = Card("46th President", "Joe Biden")
+card7 = Card("44th President", "Barrak Obama")
+card8 = Card("43rd President", "George W Bush jr")
+
+set2 = Set_of_Cards("Presidents", "History")
+set2.add_card(card5)
+set2.add_card(card6)
+set2.add_card(card7)
+set2.add_card(card8)
+
 lib1 = Library("mee")
 lib1.add_set(set1)
+lib1.add_set(set2)
 
 print(lib1)
