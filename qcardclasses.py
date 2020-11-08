@@ -3,6 +3,8 @@
 #Python 3.9########################################################################
 ###################################################################################
 
+import json
+
 #card manager
 class Card():
     def __init__(self, question=None, answer=None):
@@ -91,6 +93,17 @@ class Library():
     def __repr__(self):
         return "{}, {}\n".format(self.owner, self.collection)
 
+    #File management
+    def push_to_file(self):
+        to_dump = {self.owner : self.collection}
+        with open("library.json", "w") as jfile:
+            json.dump(to_dump, jfile)
+        self.collection = None
+
+    def pull_from_file(self):
+        with open("Library.json") as jfile:
+            data = json.load(jfile)
+        self.collection = data[self.owner]
     
 class Quiz():
     pass
@@ -127,3 +140,10 @@ lib1.add_set(set1)
 lib1.add_set(set2)
 
 print(lib1)
+
+lib1.push_to_file()
+print(lib1)
+
+lib1.pull_from_file()
+print(lib1)
+
