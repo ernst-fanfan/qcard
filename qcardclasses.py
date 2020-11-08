@@ -53,7 +53,8 @@ class Set_of_Cards():
     #add card to set
     def add_card(self, card):
         key = card.get_question()
-        self.cards[key] = card
+        value = card.get_answer()
+        self.cards[key] = value
         
     #remove carsd to set
     def remove_card(self, card):
@@ -80,7 +81,8 @@ class Library():
 
     def add_set(self, new_set):
         key = new_set.get_name()
-        self.collection[key] = new_set
+        value = {"subject" : new_set.get_subject(), "cards" : new_set.get_cards()}
+        self.collection[key] = value
 
     def remove_set(self, set_to_remove):
         key = set_to_remove.get_name()
