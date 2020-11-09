@@ -72,7 +72,7 @@ class Set_of_Cards():
         
     def __repr__(self):
         return "{}, {}, {}".format(self.name, self.subject, self.cards)
-    
+
 class Library():
     def __init__(self, owner):
         self.owner = owner
@@ -106,7 +106,15 @@ class Library():
         self.collection = data[self.owner]
     
 class Quiz():
-    pass
+    def __init__(self, new_set):
+        self.new_set 
+        self.kuiz = {}
+
+    def load_quiz(self, num = 10):
+        #loop num times and 
+        #random select
+        #load random
+        pass
     
 class test(Quiz):
     pass
