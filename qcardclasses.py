@@ -74,7 +74,7 @@ class Set_of_Cards():
         self.structure['cards'] [index]= card
         self.set_size(index)
         
-    #remove carsd to set
+    #remove card from set
     def remove_card(self, card):
         key = card.get_index()
         self.cards.pop(key)
@@ -104,7 +104,7 @@ class Set_of_Cards():
         self.set_size(index)
         
     def __repr__(self):
-        return "{}, {}, {}".format(self.name, self.subject, self.cards)
+        return self.structure
 
 class Library():
     def __init__(self, owner):
