@@ -8,10 +8,7 @@ import json
 #card manager
 class Card():
     def __init__(self, question=None, answer=None):
-        if not question == None:
-            self.content ['question'] = question
-            self.content ['answer'] = answer
-            self.content ['index'] = None
+        self.content = {'index' : None, 'question' : question, 'answer' : answer}
         
     def get_question(self):
         return self.content['question']
@@ -35,12 +32,8 @@ class Card():
         return self.content
     
 class Set_of_Cards():
-    def __init__(self, name=None, subject=None, cards=None):
-        self.structure['name'] = name
-        self.structure['subject'] = subject
-        self.structure['size'] = 0
-        if cards == None:
-            self.structure['cards'] = {}
+    def __init__(self, name=None, subject=None, cards={}):
+        self.structure = {'index' : None, 'name' : name, 'subject' : subject, 'size' : 0, 'cards' : cards}
         
     def set_name(self, name):
         self.structure['name'] = name
@@ -50,6 +43,9 @@ class Set_of_Cards():
 
     def set_size(self, num):
         self.structure['size'] = num
+
+    def set_index(self, index):
+        self.structure['index'] = index
         
     # Not sure if I will need this
     # def set_cards(self, cards):
@@ -66,6 +62,9 @@ class Set_of_Cards():
 
     def get_size(self):
         return self.structure['size']
+
+    def get_index(self):
+        return self.structure['index']
         
     #add card to set
     def add_card(self, card):
@@ -96,47 +95,76 @@ class Set_of_Cards():
             self.set_subject(subject)
 
         index = self.get_size()
-        for card in new_set:
+        new_cards = new_set.get_cards()
+        for card in new_cards:
             index += 1
             card.set_index(index)
 
-        self.cards = self.cards | new_set.get_cards()
+        cards = self.get_cards()
+        cards = cards | new_cards
         self.set_size(index)
         
     def __repr__(self):
         return self.structure
 
 class Library():
-    def __init__(self, owner):
-        self.owner = owner
-        self.collection = {}
+    def __init__(self, owner, size=0, library={}):
+        self.library = {'owner' : owner, 'size' : size,'library' : library}
 
     def get_owner(self):
-        return self.owner
+        return self.library['owner']
+
+    def get_library(self):
+        return self.library['library']
+
+    def get_size(self):
+        return self.library['size']
+
+    def set_owner(self, owner):
+        self.library['owner']  = owner
+
+    def set_library(self, library):
+        self.library['library'] = library
+
+    def set_size(self, size):
+        self.library['size'] = size
 
     def add_set(self, new_set):
-        key = new_set.get_name()
-        value = {"subject" : new_set.get_subject(), "cards" : new_set.get_cards()}
-        self.collection[key] = value
+        index = self.get_size() + 1
+        library = self.get_library()
+        new_set.set_index(index)
+        library[index] = new_set
+        self.set_size(index)
 
-    def remove_set(self, set_to_remove):
-        key = set_to_remove.get_name()
-        self.collection.pop(key)
+    def remove_set(self, index):
+        library = self.get_library()
+        library.pop(index)
+
+    def merge_library(self, new_library):
+        index = self.get_size()
+        new_collection = new_library.get_library()
+        for set_of_card in new_collection:
+            index += 1
+            set_of_card.set_index(index)
+
+        library = self.get_library()
+        library = library | new_collection
+        self.set_size(index)
 
     def __repr__(self):
-        return "{}, {}\n".format(self.owner, self.collection)
+        return self.library
 
     #File management
     def push_to_file(self):
-        to_dump = {self.owner : self.collection}
+        to_dump = self.library
         with open("library.json", "w") as jfile:
             json.dump(to_dump, jfile)
-        self.collection = None
+        self.library = None
 
     def pull_from_file(self):
         with open("Library.json") as jfile:
             data = json.load(jfile)
-        self.collection = data[self.owner]
+        self.library = data
     
 class Quiz():
     def __init__(self, new_set):
