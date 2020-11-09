@@ -11,6 +11,7 @@ class Card():
         if not question == None:
             self.content ['question'] = question
             self.content ['answer'] = answer
+            self.content ['index'] = None
         
     def get_question(self):
         return self.content['question']
@@ -18,57 +19,89 @@ class Card():
     def get_answer(self):
         return self.content['answers']
         
+    def get_index(self):
+        return self.content['index']
+
     def set_question(self, question):
         self.content['questions'] = question
         
     def set_answer(self, answer):
         self.content['answer'] = answer
+
+    def set_index(self, index):
+        self.content['index'] = index
         
     def __repr__(self):#may need mod for jason DB
         return self.content
     
 class Set_of_Cards():
     def __init__(self, name=None, subject=None, cards=None):
-        self.name = name
-        self.subject = subject
+        self.structure['name'] = name
+        self.structure['subject'] = subject
+        self.structure['size'] = 0
         if cards == None:
-            self.cards = {}
+            self.structure['cards'] = {}
         
     def set_name(self, name):
-        self.name = name
+        self.structure['name'] = name
         
     def set_subject(self, subject):
-        self.subject
+        self.structure['subject'] = subject
+
+    def set_size(self, num):
+        self.structure['size'] = num
         
-    def set_cards(self, cards):
-        self.cards = cards 
+    # Not sure if I will need this
+    # def set_cards(self, cards):
+    #     self.cards = cards 
         
     def get_name(self):
-        return self.name
+        return self.structure['name']
         
     def get_subject(self):
-        return self.subject
+        return self.structure['subject']
         
     def get_cards(self):
-        return self.cards
+        return self.structure.['cards']
+
+    def get_size(self):
+        return self.structure['size']
         
     #add card to set
     def add_card(self, card):
-        key = card.get_question()
-        value = card.get_answer()
-        self.cards[key] = value
+        index = self.get_size() + 1
+        card.set_index(index)
+        self.structure['cards'] [index]= card
+        self.set_size(index)
         
     #remove carsd to set
     def remove_card(self, card):
-        key = card.question
+        key = card.get_index()
         self.cards.pop(key)
+
+    def find_card(self, question=None, answer=None):
+        if not question == None:
+            for card in self.get_cards():
+                if question == card.get_question():
+                    return card
+        elif not answer ==None:
+            for card in self.get_cards():
+                if answer == card.get_answer():
+                    return card
         
     def merge_sets(self, new_set, name=None, subject=None):
         if not name == None:
             self.set_name(name)
         if not subject == None:
             self.set_subject(subject)
+
+        index = self.get_size()
+        for card in new_set:
+            index += 1
+            card.set_index(index)
+
         self.cards = self.cards | new_set.get_cards()
+        self.set_size(index)
         
     def __repr__(self):
         return "{}, {}, {}".format(self.name, self.subject, self.cards)
