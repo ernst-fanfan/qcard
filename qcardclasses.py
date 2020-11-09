@@ -8,24 +8,24 @@ import json
 #card manager
 class Card():
     def __init__(self, question=None, answer=None):
-        self.question = question
-        self.answer = answer
+        if not question == None:
+            self.content ['question'] = question
+            self.content ['answer'] = answer
         
     def get_question(self):
-        return self.question
+        return self.content['question']
         
     def get_answer(self):
-        return self.answer
+        return self.content['answers']
         
     def set_question(self, question):
-        self.question = question
+        self.content['questions'] = question
         
     def set_answer(self, answer):
-        self.answer = answer
+        self.content['answer'] = answer
         
     def __repr__(self):#may need mod for jason DB
-        message = "{}, {}".format(self.question, self.answer)
-        return message
+        return self.content
     
 class Set_of_Cards():
     def __init__(self, name=None, subject=None, cards=None):
