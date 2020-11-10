@@ -122,7 +122,7 @@ class Set_of_Cards():
         
     def get_card_index(self, index):
         cards = self.get_cards()
-        return cards[1]
+        return cards[index]
 
     def __repr__(self):
         return str(self.structure)
@@ -133,6 +133,10 @@ class Library():
             self.library = {'owner' : owner, 'size' : size,'library' : {}}
         else:
             self.library = {'owner' : owner, 'size' : size,'library' : library}
+
+    def get_set(self, index):
+        library = self.get_library()
+        return library[index]
 
     def get_owner(self):
         return self.library['owner']
@@ -210,27 +214,31 @@ class Quiz():
 
     def load_quiz(self, num):
         ap = []
+        size = self.set_.get_size()
         for i in range(num):
-            c = rn.randint(1, num) 
+            c = rn.randint(1, size) 
             while c in ap:
-                c = rn.randint(1, num)
+                c = rn.randint(1, size)
             self.kuiz[i+1] = self.set_.get_card_index(c)
             ap.append(c)
+
+    def __repr__(self):
+        return str(self.kuiz)
     
 class test(Quiz):
     pass
     
 #test
-card1 = Card("1+1", "2")
-card2 = Card("1+2", "3")
-card3 = Card("1+3", "4")
-card4 = Card("1+4", "5")
+card1 = Card(question="1+1", answer="2")
+card2 = Card(question="1+2", answer="3")
+card3 = Card(question="1+3", answer="4")
+card4 = Card(question="1+4", answer="5")
 # card5 = Card("1st President", "George Washignton")
 # card6 = Card("46th President", "Joe Biden")
 # card7 = Card("44th President", "Barrak Obama")
 # card8 = Card("43rd President", "George W Bush jr")
 
-set1 = Set_of_Cards("One table", "Adding")
+set1 = Set_of_Cards(name="One table", subject="Adding")
 # set2 = Set_of_Cards("Presidents", "History")
 
 # print(set1)
@@ -270,3 +278,6 @@ print()
 # print(lib1)
 # print()
 # # print(lib1.get_library())
+selected_set = lib1.get_set(1)
+quiz1 = Quiz(selected_set, 3)
+print(quiz1)
