@@ -4,6 +4,7 @@
 ###################################################################################
 
 import json
+import random as rn
 
 #to help json encoder process my classes
 class MyEncoder(json.JSONEncoder):
@@ -119,6 +120,10 @@ class Set_of_Cards():
         cards = cards | new_cards
         self.set_size(index)
         
+    def get_card_index(self, index):
+        cards = self.get_cards()
+        return cards[1]
+
     def __repr__(self):
         return str(self.structure)
 
@@ -198,15 +203,19 @@ class Library():
                 
     
 class Quiz():
-    def __init__(self, new_set):
-        self.new_set 
+    def __init__(self, set_, num = 10):
+        self.set_ = set_
         self.kuiz = {}
+        self.load_quiz(num)
 
-    def load_quiz(self, num = 10):
-        #loop num times and 
-        #random select
-        #load random
-        pass
+    def load_quiz(self, num):
+        ap = []
+        for i in range(num):
+            c = rn.randint(1, num) 
+            while c in ap:
+                c = rn.randint(1, num)
+            self.kuiz[i+1] = self.set_.get_card_index(c)
+            ap.append(c)
     
 class test(Quiz):
     pass
@@ -216,48 +225,48 @@ card1 = Card("1+1", "2")
 card2 = Card("1+2", "3")
 card3 = Card("1+3", "4")
 card4 = Card("1+4", "5")
-card5 = Card("1st President", "George Washignton")
-card6 = Card("46th President", "Joe Biden")
-card7 = Card("44th President", "Barrak Obama")
-card8 = Card("43rd President", "George W Bush jr")
+# card5 = Card("1st President", "George Washignton")
+# card6 = Card("46th President", "Joe Biden")
+# card7 = Card("44th President", "Barrak Obama")
+# card8 = Card("43rd President", "George W Bush jr")
 
 set1 = Set_of_Cards("One table", "Adding")
-set2 = Set_of_Cards("Presidents", "History")
+# set2 = Set_of_Cards("Presidents", "History")
 
-print(set1)
-print()
-print(set2)
-print()
+# print(set1)
+# print()
+# print(set2)
+# print()
 
 set1.add_card(card1)
 set1.add_card(card2)
 set1.add_card(card3)
 set1.add_card(card4)
-set2.add_card(card5)
-set2.add_card(card6)
-set2.add_card(card7)
-set2.add_card(card8)
+# set2.add_card(card5)
+# set2.add_card(card6)
+# set2.add_card(card7)
+# set2.add_card(card8)
 
-print(set1)
-print()
-print(set2)
-print()
+# print(set1)
+# print()
+# print(set2)
+# print()
 
 
 
 
 lib1 = Library("mee")
 lib1.add_set(set1)
-lib1.add_set(set2)
+# lib1.add_set(set2)
 
 print(lib1)
 print()
 
-lib1.push_to_file()
-print(lib1)
+# lib1.push_to_file()
+# print(lib1)
 
-lib1 = Library("mee")
-lib1.pull_from_file()
-print(lib1)
-print()
-# print(lib1.get_library())
+# lib1 = Library("mee")
+# lib1.pull_from_file()
+# print(lib1)
+# print()
+# # print(lib1.get_library())
