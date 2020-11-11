@@ -1,5 +1,5 @@
 import json
-import qcardclasses
+from qcardclasses import Library, Deck, Card
 
 #to help json encoder process my classes
 class MyEncoder(json.JSONEncoder):
