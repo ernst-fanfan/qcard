@@ -20,29 +20,31 @@ class MyEncoder(json.JSONEncoder):
 
 #card manager
 class Card():
-    def __init__(self, index = None, question=None, answer=None):
-        self.content = {'index' : index, 'question' : question, 'answer' : answer}
+    def __init__(self, question=None, answer=None):
+        self.question = question
+        self.answer = answer
         
     def get_question(self):
-        return self.content['question']
+        return self.question
         
     def get_answer(self):
-        return self.content['answers']
-        
-    def get_index(self):
-        return self.content['index']
+        return self.answer
 
     def set_question(self, question):
-        self.content['questions'] = question
+        self.question = question
         
     def set_answer(self, answer):
-        self.content['answer'] = answer
+        self.answer = answer
 
-    def set_index(self, index):
-        self.content['index'] = index
-        
+    def prep_for_json(self):
+        card = {'question': self.question, 'answer': self.answer}
+        return card
+
+    def load_card(self, json_card):
+        self.__init__(question=json_card['question'], answer=json_card['answer'])
+
     def __repr__(self):#may need mod for jason DB
-        return str(self.content)
+        return "question: {}, answer: {}".format(self.question, self.answer)
     
 class Set_of_Cards():
     def __init__(self, index=None, name=None, subject=None, size=0, cards=None):
