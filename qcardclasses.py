@@ -27,9 +27,6 @@ class Card():
         card = {'question': self.question, 'answer': self.answer}
         return card
 
-    def load_card(self, json_card):
-        self.__init__(question=json_card['question'], answer=json_card['answer'])
-
     def __repr__(self):#may need mod for jason DB
         return self.prep_for_json()
     
@@ -87,7 +84,7 @@ class Deck():
                 if answer == card.get_answer():
                     return card
         
-    def merge_sets(self, new_set, name=None, subject=None):
+    def merge_decks(self, new_set, name=None, subject=None):
         if not name == None:
             self.set_name(name)
         if not subject == None:
@@ -117,58 +114,41 @@ class Deck():
         return self.prep_for_json()
 
 class Library():
-    def __init__(self, owner, size=0, library=None):
-        if library == None:
-            self.library = {'owner' : owner, 'size' : size,'library' : {}}
+    def __init__(self, owner, size=0, decks=None):
+        self.owner = owner
+        self.size = size
+        
+        if decks == None:
+            self.decks = []
         else:
-            self.library = {'owner' : owner, 'size' : size,'library' : library}
+            self.decks = decks
 
-    def get_set(self, index):
-        library = self.get_library()
-        return library[index]
+    # def get_decks(self, index):
+    #     decks = self.get_decks()
+    #     return decks[index]
 
     def get_owner(self):
-        return self.library['owner']
+        return self.owner
 
-    def get_library(self):
-        return self.library['library']
+    def get_decks(self):
+        return self.decks
 
     def get_size(self):
-        return self.library['size']
+        return self.size
 
     def set_owner(self, owner):
-        self.library['owner']  = owner
+        self.owner  = owner
 
-    def set_library(self, library):
-        self.library['library'] = library
+    def set_decks(self, decks):
+        self.decks = decks
 
     def set_size(self, size):
-        self.library['size'] = size
+        self.size = size
 
-    def add_set(self, new_set):
-        index = self.get_size() + 1
-        library = self.get_library()
-        new_set.set_index(index)
-        library[index] = new_set
-        self.set_size(index)
-
-    def remove_set(self, index):
-        library = self.get_library()
-        library.pop(index)
-
-    def merge_library(self, new_library):
-        index = self.get_size()
-        new_collection = new_library.get_library()
-        for set_of_card in new_collection:
-            index += 1
-            set_of_card.set_index(index)
-
-        library = self.get_library()
-        library = library | new_collection
-        self.set_size(index)
-
-    def __repr__(self):
-        return str(self.library)
+    def add_deck(self, new_deck):
+        decks = self.get_decks()
+        decks.append(new_deck)
+        self.set_size(len(decks))
 
     def remove_deck(self, deck):
         decks = self.get_decks()
@@ -179,28 +159,38 @@ class Library():
         self.decks += new_decks
         self.set_size(len(self.decks))
 
-                self.library['library'][key] = extr_set
-                
-    
-class Quiz():
-    def __init__(self, set_, num = 10):
-        self.set_ = set_
-        self.kuiz = {}
-        self.load_quiz(num)
+    def prep_for_jason(self):
+        j_library = {'owner': self.owner, 'size': self.size, 'decks': self.decks}
+        return j_library
 
-    def load_quiz(self, num):
-        ap = []
-        size = self.set_.get_size()
-        for i in range(num):
-            c = rn.randint(1, size) 
-            while c in ap:
-                c = rn.randint(1, size)
-            self.kuiz[i+1] = self.set_.get_card_index(c)
-            ap.append(c)
+    def load_decks(self, j_library):
+        for j_deck in j_library:
+            l_deck = j_deck(name=j_library['name'], subject=j_library['subject'], size=j_library['size'])
+            l_deck.load_cards(j_deck['cards'])
+            self.add_deck(l_deck)
 
     def __repr__(self):
-        return str(self.kuiz)
+        return str(self.decks)              
     
-class test(Quiz):
-    pass
+# class Quiz():
+#     def __init__(self, set_, num = 10):
+#         self.set_ = set_
+#         self.kuiz = {}
+#         self.load_quiz(num)
+
+#     def load_quiz(self, num):
+#         ap = []
+#         size = self.set_.get_size()
+#         for i in range(num):
+#             c = rn.randint(1, size) 
+#             while c in ap:
+#                 c = rn.randint(1, size)
+#             self.kuiz[i+1] = self.set_.get_card_index(c)
+#             ap.append(c)
+
+#     def __repr__(self):
+#         return str(self.kuiz)
+    
+# class test(Quiz):
+#     pass
     
