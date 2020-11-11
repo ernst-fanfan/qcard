@@ -14,11 +14,11 @@ class MyEncoder(json.JSONEncoder):
             return json.JSONEncoder.default(self, obj)
 #File management
 def save_library(library):
-    with open("decks.json", "w") as jfile:
+    with open("library.json", "w") as jfile:
         json.dump(library, jfile, cls=MyEncoder)
 
 def open_library():
-    with open("decks.json") as jfile:
+    with open("library.json") as jfile:
         j_library = json.load(jfile)
         l_library = Library(owner=j_library['owner'], size=j_library['size']) 
         l_library.load_decks(j_library['decks']) 
