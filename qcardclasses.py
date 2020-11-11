@@ -12,9 +12,9 @@ class MyEncoder(json.JSONEncoder):
         if isinstance(obj, Library):
             return obj.library
         elif isinstance(obj, Set_of_Cards):
-            return obj.structure
+            return obj.prep_for_json()
         elif isinstance(obj, Card):
-            return obj.content
+            return obj.prep_for_json()
         else:
             return json.JSONEncoder.default(self, obj)
 
