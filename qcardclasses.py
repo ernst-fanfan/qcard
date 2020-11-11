@@ -28,7 +28,7 @@ class Card():
         return card
 
     def __repr__(self):#may need mod for jason DB
-        return self.prep_for_json()
+        return str(self.prep_for_json())
     
 class Deck():
     def __init__(self, name=None, subject=None, size=0, cards=None):
@@ -111,7 +111,7 @@ class Deck():
             self.add_card(l_card)
 
     def __repr__(self):
-        return self.prep_for_json()
+        return str(self.prep_for_json())
 
 class Library():
     def __init__(self, owner, size=0, decks=None):
@@ -170,7 +170,7 @@ class Library():
             self.add_deck(l_deck)
 
     def __repr__(self):
-        return str(self.decks)              
+        return str(str(self.decks))
     
 # class Quiz():
 #     def __init__(self, set_, num = 10):
