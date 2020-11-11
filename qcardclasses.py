@@ -44,7 +44,7 @@ class Card():
         self.__init__(question=json_card['question'], answer=json_card['answer'])
 
     def __repr__(self):#may need mod for jason DB
-        return "question: {}, answer: {}".format(self.question, self.answer)
+        return self.prep_for_json()
     
 class Set_of_Cards():
     def __init__(self, name=None, subject=None, size=0, cards=None):
