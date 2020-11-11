@@ -159,7 +159,7 @@ class Library():
         self.decks += new_decks
         self.set_size(len(self.decks))
 
-    def prep_for_jason(self):
+    def prep_for_json(self):
         j_library = {'owner': self.owner, 'size': self.size, 'decks': self.decks}
         return j_library
 
@@ -170,7 +170,7 @@ class Library():
             self.add_deck(l_deck)
 
     def __repr__(self):
-        return str(self.prep_for_jason())
+        return str(self.prep_for_json())
     
 # class Quiz():
 #     def __init__(self, set_, num = 10):
