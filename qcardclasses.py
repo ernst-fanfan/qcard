@@ -122,7 +122,7 @@ class Set_of_Cards():
         return j_set
 
     def __repr__(self):
-        return "Set: {}, Subject: {}, Cards: {}".format(self.name, self.subject, self.cards)
+        return self.prep_for_json()
 
 class Library():
     def __init__(self, owner, size=0, library=None):
