@@ -117,6 +117,10 @@ class Set_of_Cards():
     #     cards = self.get_cards()
     #     return cards[index]
 
+    def prep_for_json(self):
+        j_set = {'name': self.name, 'subject': self.subject, 'card': self.cards}
+        return j_set
+
     def __repr__(self):
         return "Set: {}, Subject: {}, Cards: {}".format(self.name, self.subject, self.cards)
 
