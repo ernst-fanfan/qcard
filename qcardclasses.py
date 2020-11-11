@@ -3,20 +3,7 @@
 #Python 3.9########################################################################
 ###################################################################################
 
-import json
 import random as rn
-
-#to help json encoder process my classes
-class MyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Library):
-            return obj.library
-        elif isinstance(obj, Deck):
-            return obj.prep_for_json()
-        elif isinstance(obj, Card):
-            return obj.prep_for_json()
-        else:
-            return json.JSONEncoder.default(self, obj)
 
 #card manager
 class Card():
@@ -178,27 +165,14 @@ class Library():
     def __repr__(self):
         return str(self.library)
 
-    #File management
-    def push_to_file(self):
-        library = self
-        with open("library.json", "w") as jfile:
-            json.dump(library, jfile, cls=MyEncoder)
-        self.library = None
+    def remove_deck(self, deck):
+        decks = self.get_decks()
+        decks.remove(deck)
 
-    def pull_from_file(self):
-        with open("Library.json") as jfile:
-            data = json.load(jfile)
-            self.set_size(data['size'])
-            for key in data['library']:
-                #rebuild set
-                set_ = data['library'][key]
-                extr_set = Deck(index=set_['index'], name=set_['name'], subject=set_['subject'], size=set_['size'])
-                
-                for key2 in set_['cards']:
-                    #rebuild card
-                    card = set_['cards'][key2] 
-                    extr_card = Card(index=card['index'], question=card['question'], answer=card['answer'])
-                    extr_set.structure['cards'][key2] = extr_card
+    def merge_libraries(self, new_library):
+        new_decks = new_library.get_decks()
+        self.decks += new_decks
+        self.set_size(len(self.decks))
 
                 self.library['library'][key] = extr_set
                 
@@ -225,56 +199,3 @@ class Quiz():
 class test(Quiz):
     pass
     
-#test
-card1 = Card(question="1+1", answer="2")
-card2 = Card(question="1+2", answer="3")
-card3 = Card(question="1+3", answer="4")
-card4 = Card(question="1+4", answer="5")
-# card5 = Card("1st President", "George Washignton")
-# card6 = Card("46th President", "Joe Biden")
-# card7 = Card("44th President", "Barrak Obama")
-# card8 = Card("43rd President", "George W Bush jr")
-
-set1 = Deck(name="One table", subject="Adding")
-# set2 = Deck("Presidents", "History")
-
-# print(set1)
-# print()
-# print(set2)
-# print()
-
-set1.add_card(card1)
-set1.add_card(card2)
-set1.add_card(card3)
-set1.add_card(card4)
-# set2.add_card(card5)
-# set2.add_card(card6)
-# set2.add_card(card7)
-# set2.add_card(card8)
-
-# print(set1)
-# print()
-# print(set2)
-# print()
-
-
-
-
-lib1 = Library("mee")
-lib1.add_set(set1)
-# lib1.add_set(set2)
-
-print(lib1)
-print()
-
-# lib1.push_to_file()
-# print(lib1)
-
-# lib1 = Library("mee")
-# lib1.pull_from_file()
-# print(lib1)
-# print()
-# # print(lib1.get_library())
-selected_set = lib1.get_set(1)
-quiz1 = Quiz(selected_set, 3)
-print(quiz1)
