@@ -47,54 +47,48 @@ class Card():
         return "question: {}, answer: {}".format(self.question, self.answer)
     
 class Set_of_Cards():
-    def __init__(self, index=None, name=None, subject=None, size=0, cards=None):
+    def __init__(self, name=None, subject=None, size=0, cards=None):
+        self.name = name
+        self.subject = subject
+        self.size = size
         if cards == None:
-            self.structure = {'index' : index, 'name' : name, 'subject' : subject, 'size' : size, 'cards' : {}}
+            self.cards = []
         else:
-            self.structure = {'index' : index, 'name' : name, 'subject' : subject, 'size' : size, 'cards' : cards}
+            self.cards = cards
         
     def set_name(self, name):
-        self.structure['name'] = name
+        self.name  = name
         
     def set_subject(self, subject):
-        self.structure['subject'] = subject
+        self.subject = subject
 
     def set_size(self, num):
-        self.structure['size'] = num
-
-    def set_index(self, index):
-        self.structure['index'] = index
+        self.size = num
         
-    # Not sure if I will need this
-    # def set_cards(self, cards):
-    #     self.cards = cards 
+    def set_cards(self, cards):
+        self.cards = cards 
         
     def get_name(self):
-        return self.structure['name']
+        return self.name
         
     def get_subject(self):
-        return self.structure['subject']
+        return self.subject
         
     def get_cards(self):
-        return self.structure['cards']
+        return self.cards
 
     def get_size(self):
-        return self.structure['size']
-
-    def get_index(self):
-        return self.structure['index']
+        return self.size
         
     #add card to set
     def add_card(self, card):
         index = self.get_size() + 1
-        card.set_index(index)
-        self.structure['cards'] [index]= card
+        self.cards.append(card)
         self.set_size(index)
         
     #remove card from set
     def remove_card(self, card):
-        key = card.get_index()
-        self.cards.pop(key)
+        self.cards.remove(card)
 
     def find_card(self, question=None, answer=None):
         if not question == None:
@@ -114,20 +108,17 @@ class Set_of_Cards():
 
         index = self.get_size()
         new_cards = new_set.get_cards()
-        for card in new_cards:
-            index += 1
-            card.set_index(index)
-
-        cards = self.get_cards()
-        cards = cards | new_cards
-        self.set_size(index)
         
-    def get_card_index(self, index):
         cards = self.get_cards()
-        return cards[index]
+        cards = cards + new_cards
+        self.set_size(len(cards))
+        
+    # def get_card_index(self, index):
+    #     cards = self.get_cards()
+    #     return cards[index]
 
     def __repr__(self):
-        return str(self.structure)
+        return "Set: {}, Subject: {}, Cards: {}".format(self.name, self.subject, self.cards)
 
 class Library():
     def __init__(self, owner, size=0, library=None):
