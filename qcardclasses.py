@@ -11,7 +11,7 @@ class MyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Library):
             return obj.library
-        elif isinstance(obj, Set_of_Cards):
+        elif isinstance(obj, Deck):
             return obj.prep_for_json()
         elif isinstance(obj, Card):
             return obj.prep_for_json()
@@ -46,7 +46,7 @@ class Card():
     def __repr__(self):#may need mod for jason DB
         return self.prep_for_json()
     
-class Set_of_Cards():
+class Deck():
     def __init__(self, name=None, subject=None, size=0, cards=None):
         self.name = name
         self.subject = subject
@@ -192,7 +192,7 @@ class Library():
             for key in data['library']:
                 #rebuild set
                 set_ = data['library'][key]
-                extr_set = Set_of_Cards(index=set_['index'], name=set_['name'], subject=set_['subject'], size=set_['size'])
+                extr_set = Deck(index=set_['index'], name=set_['name'], subject=set_['subject'], size=set_['size'])
                 
                 for key2 in set_['cards']:
                     #rebuild card
@@ -235,8 +235,8 @@ card4 = Card(question="1+4", answer="5")
 # card7 = Card("44th President", "Barrak Obama")
 # card8 = Card("43rd President", "George W Bush jr")
 
-set1 = Set_of_Cards(name="One table", subject="Adding")
-# set2 = Set_of_Cards("Presidents", "History")
+set1 = Deck(name="One table", subject="Adding")
+# set2 = Deck("Presidents", "History")
 
 # print(set1)
 # print()
