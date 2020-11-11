@@ -170,7 +170,7 @@ class Library():
             self.add_deck(l_deck)
 
     def __repr__(self):
-        return str(str(self.decks))
+        return str(self.prep_for_jason())
     
 # class Quiz():
 #     def __init__(self, set_, num = 10):
