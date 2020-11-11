@@ -105,8 +105,13 @@ class Deck():
     #     return cards[index]
 
     def prep_for_json(self):
-        j_set = {'name': self.name, 'subject': self.subject, 'card': self.cards}
-        return j_set
+        j_deck = {'name': self.name, 'subject': self.subject, 'card': self.cards}
+        return j_deck
+
+    def load_cards(self, j_deck):
+        for j_card in j_deck:
+            l_card = Card(question=json_card['question'], answer=json_card['answer'])
+            self.add_card(l_card)
 
     def __repr__(self):
         return self.prep_for_json()
