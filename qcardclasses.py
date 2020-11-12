@@ -102,12 +102,12 @@ class Deck():
     #     return cards[index]
 
     def prep_for_json(self):
-        j_deck = {'name': self.name, 'subject': self.subject, 'card': self.cards}
+        j_deck = {'name': self.name, 'subject': self.subject, 'size': self.size, 'cards': self.cards}
         return j_deck
 
-    def load_cards(self, j_deck):
-        for j_card in j_deck:
-            l_card = Card(question=json_card['question'], answer=json_card['answer'])
+    def load_cards(self, j_cards):
+        for j_card in j_cards:
+            l_card = Card(question=j_card['question'], answer=j_card['answer'])
             self.add_card(l_card)
 
     def __repr__(self):
@@ -163,9 +163,9 @@ class Library():
         j_library = {'owner': self.owner, 'size': self.size, 'decks': self.decks}
         return j_library
 
-    def load_decks(self, j_library):
-        for j_deck in j_library:
-            l_deck = j_deck(name=j_library['name'], subject=j_library['subject'], size=j_library['size'])
+    def load_decks(self, j_decks):
+        for j_deck in j_decks:
+            l_deck = Deck(name=j_deck['name'], subject=j_deck['subject'], size=j_deck['size'])
             l_deck.load_cards(j_deck['cards'])
             self.add_deck(l_deck)
 
