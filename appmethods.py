@@ -17,8 +17,8 @@ def save_library(library):
     with open("library.json", "w") as jfile:
         json.dump(library, jfile, cls=MyEncoder)
 
-def open_library():
-    with open("library.json") as jfile:
+def open_library(path):
+    with open(path) as jfile:
         j_library = json.load(jfile)
         l_library = Library(owner=j_library['owner'], size=j_library['size']) 
         l_library.load_decks(j_library['decks']) 
