@@ -90,12 +90,9 @@ class Deck():
         if not subject == None:
             self.set_subject(subject)
 
-        index = self.get_size()
         new_cards = new_set.get_cards()
-        
-        cards = self.get_cards()
-        cards = cards + new_cards
-        self.set_size(len(cards))
+        self.cards += new_cards
+        self.set_size(len(self.cards))
         
     # def get_card_index(self, index):
     #     cards = self.get_cards()
